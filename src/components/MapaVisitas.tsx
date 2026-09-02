@@ -1,18 +1,25 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-const defaultIcon = L.icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-});
-
 export default function MapaVisitas({ visitas }: { visitas: any[] }) {
+  const [customIcon, setCustomIcon] = useState<L.Icon | null>(null);
+
+  useEffect(() => {
+    // Configurar icono solo en el cliente
+    const icon = L.icon({
+      iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+      shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+    });
+    setCustomIcon(icon);
+  }, []);
+
   const defaultLat = -25.2867;
   const defaultLng = -57.647;
 
@@ -29,7 +36,11 @@ export default function MapaVisitas({ visitas }: { visitas: any[] }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {visitas.map((v) => (
-          <Marker key={v.id} position={[Number(v.latitud), Number(v.longitud)]} icon={defaultIcon}>
+          <Marker
+            key={v.id}
+            position={[Number(v.latitud), Number(v.longitud)]}
+            {...(customIcon ? { icon: customIcon } : {})}
+          >
             <Popup>
               <div className="text-sm">
                 <p className="font-bold text-gray-900">{v.nombre}</p>

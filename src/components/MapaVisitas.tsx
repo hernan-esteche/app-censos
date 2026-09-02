@@ -12,29 +12,17 @@ const defaultIcon = L.icon({
   popupAnchor: [1, -34],
 });
 
-export interface Visita {
-  id: string;
-  nombre: string;
-  documento?: string;
-  telefono?: string;
-  direccion?: string;
-  latitud: number;
-  longitud: number;
-  observaciones?: string;
-  created_at: string;
-}
-
-export default function MapaVisitas({ visitas }: { visitas: Visita[] }) {
+export default function MapaVisitas({ visitas }: { visitas: any[] }) {
   const defaultLat = -25.2867;
   const defaultLng = -57.647;
 
-  const centro: [number, number] =
-    visitas && visitas.length > 0
-      ? [Number(visitas[0].latitud), Number(visitas[0].longitud)]
-      : [defaultLat, defaultLng];
+  const primerPunto = visitas && visitas.length > 0 ? visitas[0] : null;
+  const centro: [number, number] = primerPunto
+    ? [Number(primerPunto.latitud), Number(primerPunto.longitud)]
+    : [defaultLat, defaultLng];
 
   return (
-    <div className="h-125 w-full rounded-xl overflow-hidden border shadow-md relative z-0">
+    <div className="h-[500px] w-full rounded-xl overflow-hidden border shadow-md relative z-0">
       <MapContainer center={centro} zoom={13} scrollWheelZoom={true} className="h-full w-full">
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'

@@ -7,10 +7,13 @@ import FormularioVisita from '@/components/FormularioVisita';
 import * as XLSX from 'xlsx';
 import { Download, Map, PlusCircle } from 'lucide-react';
 
-// Cargar el mapa solo en el cliente
 const MapaVisitas = dynamic(() => import('@/components/MapaVisitas'), {
   ssr: false,
-  loading: () => <div className="h-125 flex items-center justify-center bg-gray-100 rounded-xl">Cargando mapa...</div>,
+  loading: () => (
+    <div className="h-[500px] flex items-center justify-center bg-gray-100 rounded-xl text-gray-600">
+      Cargando mapa...
+    </div>
+  ),
 });
 
 export default function Home() {
@@ -52,17 +55,16 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="max-w-5xl mx-auto space-y-6">
-        
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-xl shadow-sm border">
           <div>
-            <h1 className="text-2xl font-black text-gray-800">Censo & Relevamiento</h1>
+            <h1 className="text-2xl font-black text-gray-900">Censo & Relevamiento</h1>
             <p className="text-sm text-gray-500">Total de visitas registradas: {visitas.length}</p>
           </div>
-          
+
           <button
             onClick={exportarAExcel}
-            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm"
           >
             <Download className="h-4 w-4" /> Exportar a Excel
           </button>
@@ -73,7 +75,9 @@ export default function Home() {
           <button
             onClick={() => setTab('formulario')}
             className={`flex items-center gap-2 py-3 px-6 font-medium text-sm border-b-2 transition-colors ${
-              tab === 'formulario' ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'
+              tab === 'formulario'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
             <PlusCircle className="h-4 w-4" /> Nuevo Registro
@@ -81,7 +85,9 @@ export default function Home() {
           <button
             onClick={() => setTab('mapa')}
             className={`flex items-center gap-2 py-3 px-6 font-medium text-sm border-b-2 transition-colors ${
-              tab === 'mapa' ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'
+              tab === 'mapa'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
             <Map className="h-4 w-4" /> Ver Mapa ({visitas.length})
@@ -96,7 +102,6 @@ export default function Home() {
             <MapaVisitas visitas={visitas} />
           </div>
         )}
-
       </div>
     </main>
   );

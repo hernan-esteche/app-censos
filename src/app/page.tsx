@@ -10,7 +10,7 @@ import { Download, Map, PlusCircle } from 'lucide-react';
 // Cargar el mapa solo en el cliente
 const MapaVisitas = dynamic(() => import('@/components/MapaVisitas'), {
   ssr: false,
-  loading: () => <div className="h-[500px] flex items-center justify-center bg-gray-100 rounded-xl">Cargando mapa...</div>,
+  loading: () => <div className="h-125 flex items-center justify-center bg-gray-100 rounded-xl">Cargando mapa...</div>,
 });
 
 export default function Home() {

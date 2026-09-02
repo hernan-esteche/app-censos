@@ -4,7 +4,6 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-// Fix para los íconos por defecto de Leaflet en Next.js
 const defaultIcon = L.icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
@@ -13,7 +12,7 @@ const defaultIcon = L.icon({
   popupAnchor: [1, -34],
 });
 
-interface Visita {
+export interface Visita {
   id: string;
   nombre: string;
   documento?: string;
@@ -26,19 +25,23 @@ interface Visita {
 }
 
 export default function MapaVisitas({ visitas }: { visitas: Visita[] }) {
-  const centroPorDefecto: [number, number] = visitas.length > 0 
-    ? [visitas[visitas.length - 1].latitud, visitas[visitas.length - 1].longitud] 
-    : [-25.2867, -57.647]; // Cambia a las coordenadas de tu ciudad
+  const defaultLat = -25.2867;
+  const defaultLng = -57.647;
+
+  const centro: [number, number] =
+    visitas && visitas.length > 0
+      ? [Number(visitas[0].latitud), Number(visitas[0].longitud)]
+      : [defaultLat, defaultLng];
 
   return (
-    <div className="h-[500px] w-full rounded-xl overflow-hidden border shadow-md relative z-0">
-      <MapContainer center={centroPorDefecto} zoom={13} scrollWheelZoom={true} className="h-full w-full">
+    <div className="h-125 w-full rounded-xl overflow-hidden border shadow-md relative z-0">
+      <MapContainer center={centro} zoom={13} scrollWheelZoom={true} className="h-full w-full">
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {visitas.map((v) => (
-          <Marker key={v.id} position={[v.latitud, v.longitud]} icon={defaultIcon}>
+          <Marker key={v.id} position={[Number(v.latitud), Number(v.longitud)]} icon={defaultIcon}>
             <Popup>
               <div className="text-sm">
                 <p className="font-bold text-gray-900">{v.nombre}</p>

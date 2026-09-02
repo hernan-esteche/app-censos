@@ -1,13 +1,20 @@
 'use client';
 
-export const dynamic = 'force-dynamic';
-
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { supabase } from '@/lib/supabase';
 import FormularioVisita from '@/components/FormularioVisita';
-import MapaVisitas from '@/components/MapaVisitas';
 import * as XLSX from 'xlsx';
 import { Download, Map, PlusCircle } from 'lucide-react';
+
+const MapaVisitas = dynamic(() => import('@/components/MapaVisitas'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[500px] flex items-center justify-center bg-gray-100 rounded-xl text-gray-600 font-medium">
+      Cargando mapa...
+    </div>
+  ),
+});
 
 export default function Home() {
   const [visitas, setVisitas] = useState<any[]>([]);

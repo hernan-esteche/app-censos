@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import { User, Lock, AlertCircle, Loader2 } from 'lucide-react';
+import { User, Lock, AlertCircle, Loader2, Sparkles, ArrowRight } from 'lucide-react';
 
 interface LoginCardProps {
   onLoginSuccess: () => void;
@@ -34,23 +34,31 @@ export default function LoginCard({ onLoginSuccess }: LoginCardProps) {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-md border border-gray-200">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-black text-gray-900">Censo & Relevamiento</h1>
-          <p className="text-sm text-gray-500 mt-1">Ingresa tus credenciales para continuar</p>
+    <main className="min-h-screen bg-gradient-to-tr from-slate-100 via-indigo-50/50 to-blue-100/40 flex items-center justify-center p-4 selection:bg-indigo-500 selection:text-white">
+      <div className="w-full max-w-md bg-white/85 backdrop-blur-md p-7 sm:p-9 rounded-3xl shadow-2xl shadow-slate-300/50 border border-white/90 transition-all">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-blue-600 text-white shadow-md shadow-indigo-500/30 mb-3.5">
+            <Sparkles className="h-6 w-6" />
+          </div>
+          <h1 className="text-2xl font-black tracking-tight text-slate-900">Censo & Relevamiento</h1>
+          <p className="text-xs text-slate-500 mt-1 font-medium">
+            Acceso seguro para administradores y encuestadores
+          </p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+              Correo Electrónico
+            </label>
             <div className="relative">
-              <User className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <User className="h-5 w-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="email"
                 required
                 autoFocus
-                placeholder="example@censo.local"
-                className="w-full border border-gray-300 rounded-lg pl-10 pr-3 py-2.5 text-base text-gray-900 bg-white focus:ring-2 focus:ring-blue-600 outline-none"
+                placeholder="usuario@censo.local"
+                className="w-full border border-slate-200 rounded-xl pl-11 pr-3.5 py-3 text-base text-slate-900 bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none placeholder:text-slate-400"
                 value={emailInput}
                 onChange={(e) => setEmailInput(e.target.value)}
               />
@@ -58,13 +66,16 @@ export default function LoginCard({ onLoginSuccess }: LoginCardProps) {
           </div>
 
           <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+              Contraseña
+            </label>
             <div className="relative">
-              <Lock className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Lock className="h-5 w-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="password"
                 required
                 placeholder="••••••••"
-                className="w-full border border-gray-300 rounded-lg pl-10 pr-3 py-2.5 text-base text-gray-900 bg-white focus:ring-2 focus:ring-blue-600 outline-none"
+                className="w-full border border-slate-200 rounded-xl pl-11 pr-3.5 py-3 text-base text-slate-900 bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none placeholder:text-slate-400"
                 value={passwordInput}
                 onChange={(e) => setPasswordInput(e.target.value)}
               />
@@ -72,8 +83,8 @@ export default function LoginCard({ onLoginSuccess }: LoginCardProps) {
           </div>
 
           {errorLogin && (
-            <div className="p-3 rounded-lg bg-red-50 border border-red-200 flex items-center gap-2 text-sm text-red-700">
-              <AlertCircle className="h-4 w-4 shrink-0" />
+            <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200/80 flex items-center gap-2 text-xs font-semibold text-rose-700 animate-in fade-in">
+              <AlertCircle className="h-4 w-4 shrink-0 text-rose-600" />
               <span>{errorLogin}</span>
             </div>
           )}
@@ -81,15 +92,18 @@ export default function LoginCard({ onLoginSuccess }: LoginCardProps) {
           <button
             type="submit"
             disabled={iniciando}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors shadow-sm mt-2 flex items-center justify-center gap-2 disabled:bg-blue-400"
+            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 active:scale-[0.99] text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-indigo-600/25 transition-all text-sm tracking-wide mt-2 disabled:opacity-60"
           >
             {iniciando ? (
               <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                Verificando...
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span>Verificando credenciales...</span>
               </>
             ) : (
-              'Iniciar Sesión'
+              <>
+                <span>Iniciar Sesión</span>
+                <ArrowRight className="h-4 w-4" />
+              </>
             )}
           </button>
         </form>

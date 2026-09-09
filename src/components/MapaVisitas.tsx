@@ -22,7 +22,7 @@ export default function MapaVisitas({ visitas }: { visitas: any[] }) {
     : [defaultLat, defaultLng];
 
   return (
-    <div className="h-[500px] w-full rounded-xl overflow-hidden border shadow-md relative z-0">
+    <div className="h-125 w-full rounded-xl overflow-hidden border shadow-md relative z-0">
       <MapContainer center={centro} zoom={13} scrollWheelZoom={true} className="h-full w-full">
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'

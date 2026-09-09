@@ -34,7 +34,7 @@ export default function LoginCard({ onLoginSuccess }: LoginCardProps) {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-tr from-slate-100 via-indigo-50/50 to-blue-100/40 flex items-center justify-center p-4 selection:bg-indigo-500 selection:text-white">
+    <main className="min-h-screen bg-linear-to-tr from-slate-100 via-indigo-50/50 to-blue-100/40 flex items-center justify-center p-4 selection:bg-indigo-500 selection:text-white">
       <div className="w-full max-w-md bg-white/85 backdrop-blur-md p-7 sm:p-9 rounded-3xl shadow-2xl shadow-slate-300/50 border border-white/90 transition-all">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-blue-600 text-white shadow-md shadow-indigo-500/30 mb-3.5">
@@ -48,9 +48,6 @@ export default function LoginCard({ onLoginSuccess }: LoginCardProps) {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-              Correo Electrónico
-            </label>
             <div className="relative">
               <User className="h-5 w-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
@@ -66,9 +63,6 @@ export default function LoginCard({ onLoginSuccess }: LoginCardProps) {
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-              Contraseña
-            </label>
             <div className="relative">
               <Lock className="h-5 w-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input

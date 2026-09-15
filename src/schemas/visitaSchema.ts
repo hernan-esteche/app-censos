@@ -17,8 +17,8 @@ export const visitaSchema = z.object({
     .string()
     .trim()
     .refine(
-      (val) => val === '' || (/^\d+$/.test(val) && val.length === 8),
-      { message: 'El teléfono debe contener exactamente 8 dígitos numéricos.' }
+      (val) => val === '' || (/^\d+$/.test(val) && val.length === 10),
+      { message: 'El teléfono debe contener exactamente 10 dígitos numéricos.' }
     ),
   direccion: z
     .string()

@@ -1,10 +1,16 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    // Si estás en una versión que usa experimental, o directamente en la raíz:
-  },
-  allowedDevOrigins: ['192.168.56.1', 'localhost:3000'],
+	experimental: {
+		// Si estás en una versión que usa experimental, o directamente en la raíz:
+	},
+	allowedDevOrigins: [
+		"192.168.56.1",
+		"localhost:3000",
+		"192.168.0.13",
+		"192.168.0.19",
+		"192.168.100.7",
+	],
 };
 
 export default nextConfig;

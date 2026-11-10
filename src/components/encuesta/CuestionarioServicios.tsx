@@ -241,6 +241,7 @@ export default function CuestionarioServicios({
 							value as EncuestaFormData["recibioInfoOtroMedio"],
 						)
 					}
+					error={errores.recibioInfoOtroMedio}
 				/>
 			</Section>
 

@@ -18,8 +18,8 @@ import type { EncuestaCuencaLambareDB, Rol, UsuarioSesion } from "@/types";
 const MapaVisitas = dynamic(() => import("@/components/MapaVisitas"), {
 	ssr: false,
 	loading: () => (
-		<div className="h-125 flex flex-col items-center justify-center bg-white/70 backdrop-blur-md rounded-2xl border border-slate-200/80 shadow-sm text-slate-500 font-medium gap-3">
-			<Loader2 className="h-6 w-6 animate-spin text-indigo-600" />
+		<div className="flex flex-col items-center justify-center gap-3 font-medium border shadow-sm h-125 bg-white/70 backdrop-blur-md rounded-2xl border-slate-200/80 text-slate-500">
+			<Loader2 className="w-6 h-6 text-indigo-600 animate-spin" />
 			<span>Cargando mapa interactivo...</span>
 		</div>
 	),
@@ -62,9 +62,9 @@ export default function Home() {
 
 	if (cargandoSesion) {
 		return (
-			<div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-tr from-slate-100 via-indigo-50/50 to-blue-100/40 text-slate-600 font-medium gap-3">
-				<div className="p-3 bg-white/80 rounded-2xl shadow-lg border border-slate-200/80 backdrop-blur-md">
-					<Loader2 className="h-7 w-7 animate-spin text-indigo-600" />
+			<div className="flex flex-col items-center justify-center min-h-screen gap-3 font-medium bg-linear-to-tr from-slate-100 via-indigo-50/50 to-blue-100/40 text-slate-600">
+				<div className="p-3 border shadow-lg bg-white/80 rounded-2xl border-slate-200/80 backdrop-blur-md">
+					<Loader2 className="text-indigo-600 h-7 w-7 animate-spin" />
 				</div>
 				<p className="text-sm tracking-wide text-slate-500">
 					Iniciando plataforma...
@@ -79,17 +79,17 @@ export default function Home() {
 
 	return (
 		<main
-			className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed relative selection:bg-indigo-500 selection:text-white"
-			style={{ backgroundImage: "url('/ciudad-lambare-2.jpeg')" }}
+			className="relative min-h-screen bg-fixed bg-center bg-no-repeat bg-cover selection:bg-indigo-500 selection:text-white"
+			style={{ backgroundImage: "url('/ciudad-lambare-burrerita.jpeg')" }}
 		>
 			{/* <div className="absolute inset-0 bg-slate-900/30 backdrop-blur-[2px] z-0 pointer-events-none" /> */}
-			<div className="absolute inset-0 bg-slate-900/30 z-0 pointer-events-none" />{" "}
-			<div className="relative z-10 max-w-5xl mx-auto p-4 sm:p-6 md:p-8 space-y-6">
+			<div className="absolute inset-0 z-0 pointer-events-none bg-slate-900/30" />{" "}
+			<div className="relative z-10 max-w-5xl p-4 mx-auto space-y-6 sm:p-6 md:p-8">
 				{/* Header con Efecto Glassmorphism */}
-				<header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/80 backdrop-blur-md p-5 rounded-2xl shadow-xl shadow-slate-200/40 border border-white/80 transition-all">
+				<header className="flex flex-col items-start justify-between gap-4 p-5 transition-all border shadow-xl sm:flex-row sm:items-center bg-white/80 backdrop-blur-md rounded-2xl shadow-slate-200/40 border-white/80">
 					<div>
-						<div className="flex items-center gap-2">
-							<h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
+						<div className="flex items-center gap-2 justify-items-start">
+							<h1 className="text-2xl font-black tracking-tight sm:text-3xl text-slate-900">
 								Contraloría Ciudadana de Lambaré
 							</h1>
 						</div>
@@ -109,7 +109,7 @@ export default function Home() {
 								onClick={() => void exportarEncuestasAExcel(visitas)}
 								className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-[0.98] text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-md shadow-emerald-600/20"
 							>
-								<Download className="h-4 w-4 shrink-0" />
+								<Download className="w-4 h-4 shrink-0" />
 								<span>Exportar Excel</span>
 							</button>
 						)}
@@ -120,7 +120,7 @@ export default function Home() {
 							className="inline-flex items-center justify-center gap-1.5 bg-white hover:bg-slate-100/80 active:bg-slate-200/70 text-slate-700 px-3.5 py-2.5 rounded-xl text-sm font-medium border border-slate-200 shadow-2xs transition-all"
 							title="Cerrar sesión"
 						>
-							<LogOut className="h-4 w-4 text-slate-500" />
+							<LogOut className="w-4 h-4 text-slate-500" />
 							<span>Salir</span>
 						</button>
 					</div>
@@ -138,7 +138,7 @@ export default function Home() {
 									: "text-slate-600 hover:text-slate-900"
 							}`}
 						>
-							<PlusCircle className="h-4 w-4 shrink-0" />
+							<PlusCircle className="w-4 h-4 shrink-0" />
 							<span>Nuevo Registro</span>
 						</button>
 						<button
@@ -150,7 +150,7 @@ export default function Home() {
 									: "text-slate-600 hover:text-slate-900"
 							}`}
 						>
-							<MapIcon className="h-4 w-4 shrink-0" />
+							<MapIcon className="w-4 h-4 shrink-0" />
 							<span>Ver Mapa ({visitas.length})</span>
 						</button>
 					</div>
@@ -163,7 +163,7 @@ export default function Home() {
 							onGuardado={sesion.rol === "admin" ? cargarVisitas : undefined}
 						/>
 					) : (
-						<div className="bg-white/80 backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-xl shadow-slate-200/40 border border-white/80">
+						<div className="p-4 border shadow-xl bg-white/80 backdrop-blur-md sm:p-5 rounded-2xl shadow-slate-200/40 border-white/80">
 							<MapaVisitas visitas={visitas} />
 						</div>
 					)}
@@ -195,8 +195,8 @@ export default function Home() {
 // const MapaVisitas = dynamic(() => import("@/components/MapaVisitas"), {
 // 	ssr: false,
 // 	loading: () => (
-// 		<div className="h-125 flex flex-col items-center justify-center bg-white/70 backdrop-blur-md rounded-2xl border border-slate-200/80 shadow-sm text-slate-500 font-medium gap-3">
-// 			<Loader2 className="h-6 w-6 animate-spin text-indigo-600" />
+// 		<div className="flex flex-col items-center justify-center gap-3 font-medium border shadow-sm h-125 bg-white/70 backdrop-blur-md rounded-2xl border-slate-200/80 text-slate-500">
+// 			<Loader2 className="w-6 h-6 text-indigo-600 animate-spin" />
 // 			<span>Cargando mapa interactivo...</span>
 // 		</div>
 // 	),
@@ -239,9 +239,9 @@ export default function Home() {
 
 // 	if (cargandoSesion) {
 // 		return (
-// 			<div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-tr from-slate-100 via-indigo-50/50 to-blue-100/40 text-slate-600 font-medium gap-3">
-// 				<div className="p-3 bg-white/80 rounded-2xl shadow-lg border border-slate-200/80 backdrop-blur-md">
-// 					<Loader2 className="h-7 w-7 animate-spin text-indigo-600" />
+// 			<div className="flex flex-col items-center justify-center min-h-screen gap-3 font-medium bg-linear-to-tr from-slate-100 via-indigo-50/50 to-blue-100/40 text-slate-600">
+// 				<div className="p-3 border shadow-lg bg-white/80 rounded-2xl border-slate-200/80 backdrop-blur-md">
+// 					<Loader2 className="text-indigo-600 h-7 w-7 animate-spin" />
 // 				</div>
 // 				<p className="text-sm tracking-wide text-slate-500">
 // 					Iniciando plataforma...
@@ -255,13 +255,13 @@ export default function Home() {
 // 	}
 
 // 	return (
-// 		<main className="min-h-screen bg-linear-to-tr from-slate-100 via-indigo-50/40 to-blue-50/50 p-4 sm:p-6 md:p-8 selection:bg-indigo-500 selection:text-white">
+// 		<main className="min-h-screen p-4 bg-linear-to-tr from-slate-100 via-indigo-50/40 to-blue-50/50 sm:p-6 md:p-8 selection:bg-indigo-500 selection:text-white">
 // 			<div className="max-w-5xl mx-auto space-y-6">
 // 				{/* Header con Efecto Glassmorphism */}
-// 				<header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/80 backdrop-blur-md p-5 rounded-2xl shadow-xl shadow-slate-200/40 border border-white/80 transition-all">
+// 				<header className="flex flex-col items-start justify-between gap-4 p-5 transition-all border shadow-xl sm:flex-row sm:items-center bg-white/80 backdrop-blur-md rounded-2xl shadow-slate-200/40 border-white/80">
 // 					<div>
 // 						<div className="flex items-center gap-2">
-// 							<h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
+// 							<h1 className="text-2xl font-black tracking-tight sm:text-3xl text-slate-900">
 // 								Contraloría Ciudadana de Lambaré
 // 							</h1>
 // 						</div>
@@ -281,7 +281,7 @@ export default function Home() {
 // 								onClick={() => void exportarEncuestasAExcel(visitas)}
 // 								className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-[0.98] text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-md shadow-emerald-600/20"
 // 							>
-// 								<Download className="h-4 w-4 shrink-0" />
+// 								<Download className="w-4 h-4 shrink-0" />
 // 								<span>Exportar Excel</span>
 // 							</button>
 // 						)}
@@ -292,7 +292,7 @@ export default function Home() {
 // 							className="inline-flex items-center justify-center gap-1.5 bg-white hover:bg-slate-100/80 active:bg-slate-200/70 text-slate-700 px-3.5 py-2.5 rounded-xl text-sm font-medium border border-slate-200 shadow-2xs transition-all"
 // 							title="Cerrar sesión"
 // 						>
-// 							<LogOut className="h-4 w-4 text-slate-500" />
+// 							<LogOut className="w-4 h-4 text-slate-500" />
 // 							<span>Salir</span>
 // 						</button>
 // 					</div>
@@ -310,7 +310,7 @@ export default function Home() {
 // 									: "text-slate-600 hover:text-slate-900"
 // 							}`}
 // 						>
-// 							<PlusCircle className="h-4 w-4 shrink-0" />
+// 							<PlusCircle className="w-4 h-4 shrink-0" />
 // 							<span>Nuevo Registro</span>
 // 						</button>
 // 						<button
@@ -322,7 +322,7 @@ export default function Home() {
 // 									: "text-slate-600 hover:text-slate-900"
 // 							}`}
 // 						>
-// 							<MapIcon className="h-4 w-4 shrink-0" />
+// 							<MapIcon className="w-4 h-4 shrink-0" />
 // 							<span>Ver Mapa ({visitas.length})</span>
 // 						</button>
 // 					</div>
@@ -335,7 +335,7 @@ export default function Home() {
 // 							onGuardado={sesion.rol === "admin" ? cargarVisitas : undefined}
 // 						/>
 // 					) : (
-// 						<div className="bg-white/80 backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-xl shadow-slate-200/40 border border-white/80">
+// 						<div className="p-4 border shadow-xl bg-white/80 backdrop-blur-md sm:p-5 rounded-2xl shadow-slate-200/40 border-white/80">
 // 							<MapaVisitas visitas={visitas} />
 // 						</div>
 // 					)}

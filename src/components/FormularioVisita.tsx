@@ -8,11 +8,12 @@ import {
 	Send,
 	UserCheck,
 } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type SignatureCanvas from "react-signature-canvas";
 import ConsentimientoYFirma from "@/components/encuesta/ConsentimientoYFirma";
 import CuestionarioServicios from "@/components/encuesta/CuestionarioServicios";
 import DatosGenerales from "@/components/encuesta/DatosGenerales";
+import ConfirmModal from "@/components/ui/ConfirmModal";
 import { useEncuestaForm } from "@/hooks/useEncuestaForm";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { mapearParaSupabase } from "@/lib/mapeadores";
@@ -34,6 +35,7 @@ export default function FormularioVisita({
 		setLoading,
 		resetForm,
 	} = useEncuestaForm();
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const firmaComprobanteRef = useRef<HTMLDivElement>(null);
 	const firmaRef = useRef<SignatureCanvas | null>(null);
 	const {
@@ -56,6 +58,16 @@ export default function FormularioVisita({
 			setMensaje({ tipo: "error", texto: errorGps });
 		}
 	}, [errorGps, setMensaje]);
+
+	useEffect(() => {
+		if (mensaje?.tipo === "success") {
+			const timeout = setTimeout(() => {
+				setMensaje(null);
+			}, 5000);
+
+			return () => clearTimeout(timeout);
+		}
+	}, [mensaje, setMensaje]);
 
 	const generarComprobante = async (): Promise<Blob> => {
 		const recuadro = firmaComprobanteRef.current;
@@ -90,6 +102,11 @@ export default function FormularioVisita({
 			return;
 		}
 
+		setIsModalOpen(true);
+	};
+
+	const handleConfirmSubmit = async () => {
+		setIsModalOpen(false);
 		setLoading(true);
 		try {
 			const comprobante = await generarComprobante();
@@ -119,19 +136,19 @@ export default function FormularioVisita({
 	};
 
 	return (
-		<div className="mx-auto max-w-4xl rounded-3xl bg-linear-to-br from-slate-100 via-blue-50/70 to-indigo-100/60 p-3 sm:p-5">
+		<div className="max-w-4xl p-3 mx-auto rounded-3xl bg-linear-to-br from-slate-100 via-blue-50/70 to-indigo-100/60 sm:p-5">
 			<form onSubmit={handleSubmit} className="space-y-5">
-				<header className="rounded-2xl border border-white/80 bg-white/90 p-5 shadow-xl shadow-slate-200/40 backdrop-blur-md sm:p-7">
+				<header className="p-5 border shadow-xl rounded-2xl border-white/80 bg-white/90 shadow-slate-200/40 backdrop-blur-md sm:p-7">
 					<div className="flex items-center gap-3">
-						<div className="flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-tr from-blue-100 to-indigo-50 text-blue-600">
-							<UserCheck className="h-6 w-6" />
+						<div className="flex items-center justify-center text-blue-600 h-11 w-11 rounded-xl bg-linear-to-tr from-blue-100 to-indigo-50">
+							<UserCheck className="w-6 h-6" />
 						</div>
 						<div>
 							<h1 className="text-xl font-black text-slate-900 sm:text-2xl">
-								Encuesta Proyecto Cuenca Lambaré
+								Proyecto Cuenca Lambaré
 							</h1>
 							<p className="text-sm text-slate-500">
-								Formulario de registro de datos de visitas
+								Formulario de registro de datos
 							</p>
 						</div>
 					</div>
@@ -165,9 +182,9 @@ export default function FormularioVisita({
 						className={`flex items-center gap-2 rounded-xl border p-4 text-sm font-semibold ${mensaje.tipo === "success" ? "border-emerald-200 bg-emerald-50 text-emerald-800" : "border-rose-200 bg-rose-50 text-rose-800"}`}
 					>
 						{mensaje.tipo === "success" ? (
-							<CheckCircle2 className="h-5 w-5 text-emerald-600" />
+							<CheckCircle2 className="w-5 h-5 text-emerald-600" />
 						) : (
-							<AlertCircle className="h-5 w-5 text-rose-600" />
+							<AlertCircle className="w-5 h-5 text-rose-600" />
 						)}
 						<span>{mensaje.texto}</span>
 					</div>
@@ -179,15 +196,22 @@ export default function FormularioVisita({
 					className="flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:from-blue-700 hover:to-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
 				>
 					{loading ? (
-						<Loader2 className="h-5 w-5 animate-spin" />
+						<Loader2 className="w-5 h-5 animate-spin" />
 					) : (
-						<Send className="h-5 w-5" />
+						<Send className="w-5 h-5" />
 					)}
 					{loading
 						? "Guardando comprobante..."
 						: "Guardar encuesta y comprobante"}
 				</button>
 			</form>
+			<ConfirmModal
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+				onConfirm={handleConfirmSubmit}
+				title="¿Confirmar envío?"
+				message="Desea enviar la encuesta y el comprobante? Una vez enviado, no podrá modificar los datos."
+			/>
 		</div>
 	);
 }

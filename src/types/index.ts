@@ -9,6 +9,14 @@ export interface LoginCardProps {
 	onLoginSuccess: () => void;
 }
 
+export interface ConfirmModalProps {
+	isOpen: boolean;
+	onClose: () => void;
+	onConfirm: () => void;
+	title: string;
+	message: string;
+}
+
 export type TipoVivienda = "Propia" | "Alquilada" | "Asentamiento";
 export type Sexo = "F" | "M";
 export type FranjaEtaria = "15 a 29" | "30 a 44" | "45 a 59" | "60 o más";

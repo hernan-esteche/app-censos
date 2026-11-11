@@ -1,6 +1,7 @@
 "use client";
 
 import {
+	ClipboardList,
 	Download,
 	Loader2,
 	LogOut,
@@ -9,6 +10,7 @@ import {
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
+import FormularioActividades from "@/components/actividades/FormularioActividades";
 import FormularioVisita from "@/components/FormularioVisita";
 import LoginCard from "@/components/LoginCard";
 import { exportarEncuestasAExcel } from "@/lib/exportExcel";
@@ -29,7 +31,9 @@ export default function Home() {
 	const [sesion, setSesion] = useState<UsuarioSesion | null>(null);
 	const [cargandoSesion, setCargandoSesion] = useState(true);
 	const [visitas, setVisitas] = useState<EncuestaCuencaLambareDB[]>([]);
-	const [tab, setTab] = useState<"formulario" | "mapa">("formulario");
+	const [tab, setTab] = useState<"formulario" | "mapa" | "actividades">(
+		"formulario",
+	);
 
 	const cargarVisitas = useCallback(async () => {
 		const { data } = await supabase
@@ -126,25 +130,37 @@ export default function Home() {
 					</div>
 				</header>
 
-				{/* Pestañas de Navegación Estilo Pastilla Flotante (Admin) */}
-				{sesion.rol === "admin" && (
-					<div className="flex items-center justify-start p-1.5 bg-slate-200/60 backdrop-blur-sm rounded-2xl w-full sm:w-fit border border-slate-200/70">
-						<button
-							type="button"
-							onClick={() => setTab("formulario")}
-							className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 py-2 px-5 rounded-xl font-semibold text-sm transition-all duration-200 ${
-								tab === "formulario"
-									? "bg-white text-indigo-700 shadow-sm shadow-slate-300"
-									: "text-slate-600 hover:text-slate-900"
-							}`}
-						>
-							<PlusCircle className="w-4 h-4 shrink-0" />
-							<span>Nuevo Registro</span>
-						</button>
+				{/* Pestañas de navegación disponibles según el rol */}
+				<div className="flex w-full flex-wrap items-center justify-start gap-1.5 rounded-2xl border border-slate-200/70 bg-slate-200/60 p-1.5 backdrop-blur-sm sm:w-fit">
+					<button
+						type="button"
+						onClick={() => setTab("formulario")}
+						className={`flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-200 sm:flex-initial ${
+							tab === "formulario"
+								? "bg-white text-indigo-700 shadow-sm shadow-slate-300"
+								: "text-slate-600 hover:text-slate-900"
+						}`}
+					>
+						<PlusCircle className="w-4 h-4 shrink-0" />
+						<span>Nuevo Registro</span>
+					</button>
+					<button
+						type="button"
+						onClick={() => setTab("actividades")}
+						className={`flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-200 sm:flex-initial ${
+							tab === "actividades"
+								? "bg-white text-indigo-700 shadow-sm shadow-slate-300"
+								: "text-slate-600 hover:text-slate-900"
+						}`}
+					>
+						<ClipboardList className="w-4 h-4 shrink-0" />
+						<span>Actividades</span>
+					</button>
+					{sesion.rol === "admin" && (
 						<button
 							type="button"
 							onClick={() => setTab("mapa")}
-							className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 py-2 px-5 rounded-xl font-semibold text-sm transition-all duration-200 ${
+							className={`flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-200 sm:flex-initial ${
 								tab === "mapa"
 									? "bg-white text-indigo-700 shadow-sm shadow-slate-300"
 									: "text-slate-600 hover:text-slate-900"
@@ -153,19 +169,21 @@ export default function Home() {
 							<MapIcon className="w-4 h-4 shrink-0" />
 							<span>Ver Mapa ({visitas.length})</span>
 						</button>
-					</div>
-				)}
+					)}
+				</div>
 
 				{/* Contenedor de Vistas */}
 				<section className="transition-all duration-200">
-					{sesion.rol === "encuestador" || tab === "formulario" ? (
-						<FormularioVisita
-							onGuardado={sesion.rol === "admin" ? cargarVisitas : undefined}
-						/>
-					) : (
+					{tab === "actividades" ? (
+						<FormularioActividades />
+					) : tab === "mapa" && sesion.rol === "admin" ? (
 						<div className="p-4 border shadow-xl bg-white/80 backdrop-blur-md sm:p-5 rounded-2xl shadow-slate-200/40 border-white/80">
 							<MapaVisitas visitas={visitas} />
 						</div>
+					) : (
+						<FormularioVisita
+							onGuardado={sesion.rol === "admin" ? cargarVisitas : undefined}
+						/>
 					)}
 				</section>
 			</div>

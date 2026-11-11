@@ -15,7 +15,6 @@ export type ActualizarCampo = <K extends keyof EncuestaFormData>(
 ) => void;
 
 export interface SectionProps {
-	number: string;
 	title: string;
 	children: ReactNode;
 }
@@ -27,6 +26,7 @@ export interface TextFieldProps {
 	placeholder?: string;
 	onChange: (value: string) => void;
 	multiline?: boolean;
+	type?: "text" | "date";
 }
 
 export interface RadioGroupProps {

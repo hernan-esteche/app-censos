@@ -8,6 +8,7 @@ export default function TextField({
 	placeholder,
 	onChange,
 	multiline = false,
+	type = "text",
 }: TextFieldProps) {
 	const inputId = label.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-");
 	const className = `w-full rounded-xl border bg-white px-4 py-3 text-base text-slate-900 outline-none placeholder:text-slate-400 transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 ${
@@ -31,7 +32,7 @@ export default function TextField({
 			) : (
 				<input
 					id={inputId}
-					type="text"
+					type={type}
 					value={value}
 					placeholder={placeholder}
 					className={className}

@@ -13,8 +13,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "FormularioProyecto Cuenca Lambaré",
-	description: "Formulario para la cuenca de Lambaré",
+	title:
+		"Registro de Visitas | Proyecto Cuenca Lambaré — Contraloría Ciudadana",
+	description:
+		"Plataforma de relevamiento y registro de datos para la evaluación del acceso al agua potable, saneamiento básico y participación ciudadana en la Cuenca de Lambaré.",
 };
 
 export default function RootLayout({

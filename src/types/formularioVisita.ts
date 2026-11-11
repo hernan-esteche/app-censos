@@ -17,6 +17,7 @@ export type ActualizarCampo = <K extends keyof EncuestaFormData>(
 export interface SectionProps {
 	title: string;
 	children: ReactNode;
+	number?: string;
 }
 
 export interface TextFieldProps {

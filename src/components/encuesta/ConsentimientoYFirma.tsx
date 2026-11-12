@@ -63,7 +63,11 @@ export default function ConsentimientoYFirma({
 					<SignatureCanvas
 						ref={firmaRef}
 						penColor="#0f172a"
-						canvasProps={{ className: "h-40 w-full touch-none" }}
+						minWidth={1.5}
+						maxWidth={3.5}
+						velocityFilterWeight={0.7}
+						clearOnResize={false}
+						canvasProps={{ className: "h-40 w-full touch-none select-none" }}
 					/>
 
 					{/* Botón flotante posicionado en la esquina inferior derecha */}

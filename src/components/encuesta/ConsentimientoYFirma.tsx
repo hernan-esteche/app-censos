@@ -10,13 +10,16 @@ export default function ConsentimientoYFirma({
 	firmaRef,
 }: ConsentimientoYFirmaProps) {
 	return (
-		<Section number="XI" title="Consentimiento y comentarios">
+		<Section
+			number="XI"
+			title="Consentimiento y comentarios en las actividades de la CCL"
+		>
 			<div className="space-y-3">
 				{(
 					[
 						[
 							"aceptaFotoRedes",
-							"Aceptaría que su foto sea publicada en redes sociales",
+							"Aceptaría que su foto sea publicada en redes socialesL",
 						],
 						[
 							"aceptaContactoPosterior",

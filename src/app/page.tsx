@@ -78,7 +78,7 @@ export default function Home() {
 	}
 
 	if (!sesion) {
-		return <LoginCard onLoginSuccess={cargarVisitas} />;
+		return <LoginCard />;
 	}
 
 	return (

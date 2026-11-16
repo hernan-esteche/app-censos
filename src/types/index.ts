@@ -5,10 +5,6 @@ export interface UsuarioSesion {
 	rol: Rol;
 }
 
-export interface LoginCardProps {
-	onLoginSuccess: () => void;
-}
-
 export interface ConfirmModalProps {
 	isOpen: boolean;
 	onClose: () => void;

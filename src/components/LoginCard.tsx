@@ -12,9 +12,8 @@ import {
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import type { LoginCardProps } from "@/types";
 
-export default function LoginCard({ onLoginSuccess }: LoginCardProps) {
+export default function LoginCard() {
 	const [emailInput, setEmailInput] = useState("");
 	const [passwordInput, setPasswordInput] = useState("");
 	const [mostrarPassword, setMostrarPassword] = useState(false);
@@ -41,8 +40,6 @@ export default function LoginCard({ onLoginSuccess }: LoginCardProps) {
 
 		if (error) {
 			setErrorLogin("Credenciales inválidas. Verifica tu correo y contraseña.");
-		} else {
-			onLoginSuccess();
 		}
 	};
 
